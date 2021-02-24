@@ -1,0 +1,38 @@
+body{
+    background-color: #fbf1ef;
+}
+
+.span-two{
+    grid-column: span 2;
+}
+
+.calculator-grid{
+    background-color: black;
+    border: solid black 10px;
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 340px;
+    border-radius: 8px;
+    top: 60px;
+    display: grid;
+    justify-content: center;
+    grid-gap: 5px;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(80px, auto) repeat(5, 80px);
+    position: relative;
+}
+
+.calculator-grid > button{
+    border: none;
+    background-color: white;
+    font-size: 1rem;
+}
+
+.screen{
+    min-height: 80px;
+    grid-column: 1 / -1;
+    background-color: white;
+    color: white;
+    margin-bottom: 20px;
+}
+
