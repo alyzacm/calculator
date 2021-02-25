@@ -9,6 +9,7 @@ const display = document.querySelector('.display');
 let operand1 = "";
 let operand2 = ""; 
 let operation = "";
+let output = "";
 
 function add(a, b){
     return a + b;
@@ -51,41 +52,65 @@ function operate(num1, num2, op){
 function appendNumber(num){
     if(operation == ""){
         operand1 += num;
-        display.textContent = operand1;
+        output = operand1;
     }
     else{
         operand2 += num;
-        display.textContent = operand2;
+        output = operand2;
     }
 }
 
 function setOp(op){
-    if(op != "="){
+    if(op != "=" && operation == ""){
         operation = op;    
+        console.log("first: " + operand1 + " " + operation + " " + operand2);
+        
     }
-    
+    else if(op != "=" && operation != ""){
+        equals(false);
+        displayOutput();
+        operand1 = output.toString();
+        operand2 = "";
+        operation = op;
+        console.log("second: " + operand1 + " " + operation + " " + operand2);
+    }    
 }
 
 function clear(){
     operand1 = "";
     operand2 = "";
     operation = "";
-    display.textContent = "0";
+    output = "0";
 }
 
-function equals(){
+function displayOutput(){
+    display.textContent = output;
+}
+
+function equals(isEqual){
     if(operation == "÷" && operand2 == "0"){
-        display.textContent = "LOL"
+        output = "You can't do that..."
         return;
     }
+    else if(operand2 == ""){
+        operand2 = operand1;
+    }
+
     let result = operate(operand1, operand2, operation)
-    console.log(result)
-    display.textContent = result;
+    console.log("result: " + result);
+    output = result;
+    if(isEqual){
+        operand1 = "";
+        operand2 = "";
+        operation = "";
+    }
+  
 }
 
 numBtn.forEach((button) => {
     button.addEventListener('click', () => {
         appendNumber(button.textContent);
+        displayOutput();
     })
 })
 
@@ -97,8 +122,10 @@ opBtn.forEach((button) => {
 
 clrBtn.addEventListener('click', () => {
     clear();
+    displayOutput();
 })
 
 eqlBtn.addEventListener('click', () => {
-    equals();
+    equals(true);
+    displayOutput();
 })
