@@ -4,34 +4,36 @@
         <meta charset="utf-8">
         <title>Calculator</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     </head>
     
     <body>
         <div class="calculator-grid">
-            <div class="screen"></div>
+            <div class="display">0</div>
 
-            <button class="span-two">AC</button>
-            <button>DEL</button>
-            <button>÷</button>
+            <button class="span-two btn-top" id="btn-clr">AC</button>
+            <button class="btn-top" id="btn-del">DEL</button>
+            <button class="btn-op" id="btn-op">÷</button>
 
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>x</button>
+            <button class="btn-num">1</button>
+            <button class="btn-num">2</button>
+            <button class="btn-num">3</button>
+            <button class="btn-op">x</button>
 
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>-</button>
+            <button class="btn-num">4</button>
+            <button class="btn-num">5</button>
+            <button class="btn-num">6</button>
+            <button class="btn-op">-</button>
 
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>+</button>
+            <button class="btn-num">7</button>
+            <button class="btn-num">8</button>
+            <button class="btn-num">9</button>
+            <button class="btn-op">+</button>
 
-            <button>0</button>
-            <button>.</button>
-            <button class="span-two">=</button>            
+            <button class="span-two btn-num">0</button>
+            <button class="btn-num">.</button>
+            <button class="btn-op" id="btn-eql">=</button>            
         </div>
     </body>
     <footer>
