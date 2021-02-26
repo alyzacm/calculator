@@ -2,7 +2,7 @@ const numBtn = document.querySelectorAll('.btn-num');
 const opBtn = document.querySelectorAll('.btn-op');
 const delBtn = document.querySelector('#btn-del');
 const clrBtn = document.querySelector('#btn-clr');
-const eqlBtn = document.querySelector('#btn-eql')
+const eqlBtn = document.querySelector('#btn-eql');
 const display = document.querySelector('.display');
 
 
@@ -10,6 +10,7 @@ let operand1 = "";
 let operand2 = ""; 
 let operation = "";
 let output = "";
+let resetOutput = false;
 
 function add(a, b){
     return a + b;
@@ -28,10 +29,9 @@ function divide(a, b){
 }
 
 function operate(num1, num2, op){
-    let a = parseInt(num1);
-    let b = parseInt(num2);
-    console.log(op);
-    console.log(a + " " + b);
+    let a = parseFloat(num1);
+    let b = parseFloat(num2);
+
     if(op === "+"){
         return add(a, b);
     }
@@ -45,34 +45,50 @@ function operate(num1, num2, op){
         return divide(a, b);
     }
     else{
-        return -1;
+        
     }
 }
 
 function appendNumber(num){
-    if(operation == ""){
+    if(resetOutput){
+        clear();
+        operand1 = num;
+        output = operand1;
+        return;
+    }
+    let isDec = false;
+    if(num == "."){
+        isDec = includesDecimal();
+    }
+    if(!isDec && operation == ""){
         operand1 += num;
         output = operand1;
     }
-    else{
+    else if(!isDec && operation != ""){
         operand2 += num;
         output = operand2;
     }
 }
 
-function setOp(op){
-    if(op != "=" && operation == ""){
-        operation = op;    
-        console.log("first: " + operand1 + " " + operation + " " + operand2);
-        
+function includesDecimal(){
+    if(output.includes('.')){
+        return true;
     }
-    else if(op != "=" && operation != ""){
-        equals(false);
+    else{
+        return false
+    }
+}
+
+function setOp(op){
+    if(operation == ""){
+        operation = op;    
+    }
+    else if(operation != ""){
+        equals();
         displayOutput();
         operand1 = output.toString();
         operand2 = "";
         operation = op;
-        console.log("second: " + operand1 + " " + operation + " " + operand2);
     }    
 }
 
@@ -81,13 +97,15 @@ function clear(){
     operand2 = "";
     operation = "";
     output = "0";
+    resetOutput = false;
 }
 
 function displayOutput(){
     display.textContent = output;
 }
 
-function equals(isEqual){
+function equals(){
+    resetOutput = true;
     if(operation == "÷" && operand2 == "0"){
         output = "You can't do that..."
         return;
@@ -96,15 +114,9 @@ function equals(isEqual){
         operand2 = operand1;
     }
 
-    let result = operate(operand1, operand2, operation)
-    console.log("result: " + result);
+    let result = operate(operand1, operand2, operation);
+    operand1 = result;
     output = result;
-    if(isEqual){
-        operand1 = "";
-        operand2 = "";
-        operation = "";
-    }
-  
 }
 
 numBtn.forEach((button) => {
@@ -126,6 +138,6 @@ clrBtn.addEventListener('click', () => {
 })
 
 eqlBtn.addEventListener('click', () => {
-    equals(true);
+    equals();
     displayOutput();
 })
