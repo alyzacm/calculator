@@ -84,7 +84,7 @@ function setOp(op){
         operation = op;    
     }
     else if(operation != ""){
-        equals();
+        equals(true);
         displayOutput();
         operand1 = output.toString();
         operand2 = "";
@@ -104,14 +104,17 @@ function displayOutput(){
     display.textContent = output;
 }
 
-function equals(){
-    resetOutput = true;
+function equals(isChain){
+    
     if(operation == "÷" && operand2 == "0"){
         output = "You can't do that..."
         return;
     }
     else if(operand2 == ""){
         operand2 = operand1;
+    }
+    if(!isChain){
+        resetOutput = true;    
     }
 
     let result = operate(operand1, operand2, operation);
@@ -138,6 +141,6 @@ clrBtn.addEventListener('click', () => {
 })
 
 eqlBtn.addEventListener('click', () => {
-    equals();
+    equals(false);
     displayOutput();
 })
