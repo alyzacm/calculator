@@ -122,6 +122,20 @@ function equals(isChain){
     output = result;
 }
 
+function deleteEntry(){
+    if(resetOutput){
+        return;
+    }
+    if(operand1 == output){
+        operand1 = operand1.slice(0, -1);
+        output = operand1;
+    }
+    else if(operand2 = output){
+        operand2 = operand2.slice(0, -1);
+        output = operand2;
+    }
+}
+
 numBtn.forEach((button) => {
     button.addEventListener('click', () => {
         appendNumber(button.textContent);
@@ -142,5 +156,10 @@ clrBtn.addEventListener('click', () => {
 
 eqlBtn.addEventListener('click', () => {
     equals(false);
+    displayOutput();
+})
+
+delBtn.addEventListener('click', () => {
+    deleteEntry();
     displayOutput();
 })
