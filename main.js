@@ -81,7 +81,7 @@ function setOperation(op){
     if(operation == ""){
         operation = op;    
     }
-    else if(operation != "" ){
+    else if(operation != ""){
         if(shouldReset){ //if previous operation performed was =, reset
             operand1 = output;
             operand2 = "";
@@ -89,11 +89,16 @@ function setOperation(op){
             shouldReset = false;
             return;
         }
-        equals(true); //evaluate previous operation first, set results to first operand
-        displayOutput();
-        operand1 = output.toString();
-        operand2 = "";
-        operation = op;
+        if(operand2 == ""){ //if 2nd operand hasn't been entered, update operation
+            operation = op;
+        }
+        else{
+            equals(true); //evaluate previous operation first, set results to first operand
+            displayOutput();
+            operand1 = output.toString();
+            operand2 = "";
+            operation = op;
+        }
     }    
 }
 
@@ -145,7 +150,6 @@ function deleteEntry(){
 }
 
 function keyboardInput(e){
-    console.log(e.key);
     if((e.key >= 0 && e.key <= 9) || e.key === '.'){
         appendNumber(e.key);
         displayOutput();

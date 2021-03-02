@@ -31,6 +31,10 @@ body{
     outline: none;
 }
 
+.calculator-grid > button:focus{
+    background-color: white;
+}
+
 .btn-top{
     background-color: #F79489;
     border: solid #F79489 1px;
