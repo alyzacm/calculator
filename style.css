@@ -1,6 +1,6 @@
 body{
     font-family: 'DotGothic16', sans-serif;
-    /*background-color: #fbf1ef;*/
+    background-color: #fbf1ef;
     font-size: 2rem;
 }
 
@@ -15,7 +15,7 @@ body{
     margin: 30px auto;
     max-width: 340px;
     border-radius: 8px;
-    top: 60px;
+    top: 20px;
     display: grid;
     justify-content: center;
     grid-gap: 12px;
@@ -42,8 +42,8 @@ body{
 }
 
 .btn-right{
-    background-color: #F7CAC9/*#F8AFA6*/;
-    border: solid #F7CAC9/*#F8AFA6*/ 1px;
+    background-color: #F7CAC9;
+    border: solid #F7CAC9 1px;
 }
 
 .display{
@@ -57,7 +57,13 @@ body{
     align-items: flex-end;
     flex-direction: column;
     justify-content: space-around;
-  /*  word-wrap: break-word;
-    word-break: break-all;*/
+}
+
+.footer{
+    font-size: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 1px;
+    width: 100%;
 }
 

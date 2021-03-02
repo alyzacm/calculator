@@ -10,7 +10,7 @@ let operand1 = "";
 let operand2 = ""; 
 let operation = "";
 let output = "";
-let resetOutput = false;
+let shouldReset = false;
 
 function add(a, b){
     return a + b;
@@ -38,19 +38,16 @@ function operate(num1, num2, op){
     else if(op === "-"){
         return subtract(a, b);
     }
-    else if(op === "x"){
+    else if(op === "x" || op === "*"){
         return multiply(a, b);
     }
-    else if(op === "÷"){
+    else if(op === "÷" || op === "/"){
         return divide(a, b);
-    }
-    else{
-        
     }
 }
 
 function appendNumber(num){
-    if(resetOutput){
+    if(shouldReset){
         clear();
         operand1 = num;
         output = operand1;
@@ -79,12 +76,20 @@ function includesDecimal(){
     }
 }
 
-function setOp(op){
+//checks if an operation was previously entered and if it was evaluated yet
+function setOperation(op){
     if(operation == ""){
         operation = op;    
     }
-    else if(operation != ""){
-        equals(true);
+    else if(operation != "" ){
+        if(shouldReset){ //if previous operation performed was =, reset
+            operand1 = output;
+            operand2 = "";
+            operation = op;
+            shouldReset = false;
+            return;
+        }
+        equals(true); //evaluate previous operation first, set results to first operand
         displayOutput();
         operand1 = output.toString();
         operand2 = "";
@@ -97,16 +102,18 @@ function clear(){
     operand2 = "";
     operation = "";
     output = "0";
-    resetOutput = false;
+    shouldReset = false;
 }
 
 function displayOutput(){
     display.textContent = output;
 }
 
-function equals(isChain){
-    
-    if(operation == "÷" && operand2 == "0"){
+//isChain is a boolean that indicates whether multiple calculations
+//are being performed
+//if true, output needs to be updated so set shouldReset flag to true
+function equals(isChain){ 
+    if((operation == "÷" || operation == "/") && operand2 == "0"){
         output = "You can't do that..."
         return;
     }
@@ -114,7 +121,7 @@ function equals(isChain){
         operand2 = operand1;
     }
     if(!isChain){
-        resetOutput = true;    
+        shouldReset = true;    
     }
 
     let result = operate(operand1, operand2, operation);
@@ -122,8 +129,9 @@ function equals(isChain){
     output = result;
 }
 
+//allows user to undo if they click the wrong number
 function deleteEntry(){
-    if(resetOutput){
+    if(shouldReset){
         return;
     }
     if(operand1 == output){
@@ -136,6 +144,25 @@ function deleteEntry(){
     }
 }
 
+function keyboardInput(e){
+    console.log(e.key);
+    if((e.key >= 0 && e.key <= 9) || e.key === '.'){
+        appendNumber(e.key);
+        displayOutput();
+    }
+    else if(e.key === "+" || e.key === "-" || e.key === "*" || e.key === "x" || e.key === "/"){
+        setOperation(e.key);
+    }
+    else if(e.key === "=" || e.key === "Enter"){
+        equals(false);
+        displayOutput();
+    }
+    else if(e.key === "Escape"){
+        clear();
+        displayOutput();
+    }
+}
+
 numBtn.forEach((button) => {
     button.addEventListener('click', () => {
         appendNumber(button.textContent);
@@ -145,7 +172,7 @@ numBtn.forEach((button) => {
 
 opBtn.forEach((button) => {
     button.addEventListener('click', () => {
-        setOp(button.textContent);
+        setOperation(button.textContent);
     })
 })
 
@@ -163,3 +190,5 @@ delBtn.addEventListener('click', () => {
     deleteEntry();
     displayOutput();
 })
+
+document.addEventListener('keydown', keyboardInput);
